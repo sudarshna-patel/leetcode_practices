@@ -1,0 +1,46 @@
+// https://leetcode.com/problems/maximum-width-of-binary-tree/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int widthOfBinaryTree(TreeNode* root) {
+        if (root == NULL) return 0;
+        
+        int res = 0;
+        
+        queue<pair<TreeNode*, unsigned long long>> q;
+        if (root)
+            q.push({root, 1});
+        
+        while (!q.empty()) {
+            int q_size = q.size();
+            unsigned long long left = q.front().second, right;
+            
+            for (int i = 0; i < q_size; i++) {
+                TreeNode* node = q.front().first;
+                right = q.front().second;
+                q.pop();
+                
+                if (node->left != NULL) {
+                    q.push({node->left, 2*right});
+                }
+                if (node->right != NULL) {
+                    q.push({node->right, 2*right+1});
+                }
+            }
+            res = max(res, (int)(right - left + 1));
+        }
+        
+        return res;
+    }
+};
