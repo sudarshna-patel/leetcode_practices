@@ -1,2 +1,2 @@
 # leetcode_practices
-# collection of problems I solved.
+collection of problems I solved.
